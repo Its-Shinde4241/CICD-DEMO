@@ -4,7 +4,7 @@ const app = express();
 
 app.get("/", (req, res) => {
   return res.send(
-    "<center><h1>this is just simple docker and cicd demo applicaton </h1></center>",
+    "<center>this is just simple docker and cicd demo applicaton </center>",
   );
 });
 

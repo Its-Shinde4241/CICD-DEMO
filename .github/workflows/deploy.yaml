@@ -1,4 +1,5 @@
-name: CICD DEMO
+name: Deploy
+
 on:
   push:
     branches:
@@ -7,17 +8,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
 
-      - name: Deploy Via SSH
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
-          uses: ubuntu
+          username: ubuntu
           key: ${{ secrets.SSH_KEY }}
-          scripts: |
-            cd /root/nodejs-application-deploy-github-actions
-            git pull
+          script: |
+            cd ~/CICD-DEMO
+            git pull origin main
+            docker compose down
             docker compose up -d --build
